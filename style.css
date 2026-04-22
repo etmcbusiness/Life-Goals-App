@@ -95,7 +95,9 @@ body {
 .month-page-heading {
   text-align: center;
   min-width: 0;
+  max-width: 100%;
   padding: 0 6px;
+  overflow-wrap: anywhere;
 }
 
 .month-page-heading .app-title {
@@ -1836,14 +1838,11 @@ html {
     box-shadow: none;
   }
 
+  /* Month nav is below fixed menu/dashboard; large horizontal padding was
+     collapsing the center column (grid min-width) and jumbling title + progress. */
   .app-container--month-split .month-page-nav {
-    --month-nav-chrome: max(
-      118px,
-      env(safe-area-inset-left, 0px),
-      env(safe-area-inset-right, 0px)
-    );
-    padding-left: var(--month-nav-chrome);
-    padding-right: var(--month-nav-chrome);
+    padding-left: 0;
+    padding-right: 0;
     width: 100%;
     box-sizing: border-box;
   }
@@ -1875,12 +1874,18 @@ html {
   }
 
   .month-page-nav {
-    column-gap: 24px;
-    row-gap: 14px;
+    column-gap: clamp(8px, 2.5vw, 18px);
+    row-gap: 12px;
   }
 
   .month-page-heading .app-title {
     font-size: clamp(1.05rem, 5.4vw, 1.45rem);
+    max-width: 100%;
+  }
+
+  .app-container--month-split .header-progress-section {
+    max-width: 100%;
+    min-width: 0;
   }
 
   .month-page-analytics {
