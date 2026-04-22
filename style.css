@@ -1707,6 +1707,151 @@ input[type='number'] {
   opacity: 0.85;
 }
 
+/* ── Mobile: safe areas, avoid fixed chrome overlap, readable type ── */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (max-width: 520px) {
+  :root {
+    --revenue-entry-font-size: 14px;
+    --revenue-entry-row-height: 48px;
+  }
+
+  body {
+    padding-top: max(72px, calc(env(safe-area-inset-top, 0px) + 52px));
+    padding-left: max(12px, env(safe-area-inset-left, 0px));
+    padding-right: max(12px, env(safe-area-inset-right, 0px));
+    padding-bottom: max(20px, env(safe-area-inset-bottom, 0px));
+  }
+
+  .app-container {
+    gap: 22px;
+    padding-bottom: max(64px, calc(env(safe-area-inset-bottom, 0px) + 40px));
+  }
+
+  .app-title {
+    font-size: clamp(1.2rem, 6.2vw, 1.6rem);
+    letter-spacing: 0.2em;
+    text-align: center;
+    padding: 0 6px;
+  }
+
+  .step-label {
+    font-size: clamp(0.78rem, 3.6vw, 1rem);
+    letter-spacing: 0.08em;
+    text-align: center;
+    line-height: 1.35;
+    padding: 0 4px;
+  }
+
+  .header-scale-label {
+    font-size: clamp(0.92rem, 5vw, 1.35rem);
+    letter-spacing: 0.06em;
+  }
+
+  .progress-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+
+  .menu-btn {
+    top: max(10px, env(safe-area-inset-top, 0px));
+    left: max(10px, env(safe-area-inset-left, 0px));
+    width: 44px;
+    height: 44px;
+  }
+
+  .dashboard-home-btn {
+    top: max(10px, env(safe-area-inset-top, 0px));
+    right: max(10px, env(safe-area-inset-right, 0px));
+  }
+
+  .month-countdown {
+    top: max(10px, env(safe-area-inset-top, 0px));
+    right: max(10px, env(safe-area-inset-right, 0px));
+    max-width: calc(100vw - 96px);
+    font-size: clamp(10px, 3.1vw, 13px);
+    line-height: 1.25;
+    letter-spacing: 0.05em;
+  }
+
+  .dashboard-money-gate {
+    min-height: 132px;
+    padding: 22px 14px;
+    letter-spacing: 0.16em;
+    font-size: clamp(1.35rem, 6vw, 2.25rem);
+  }
+
+  .terminal-box {
+    padding: 16px 14px;
+  }
+
+  .input-wrapper {
+    padding: 12px;
+  }
+
+  .month-page-body {
+    gap: 18px;
+  }
+
+  .month-page-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .month-page-heading .app-title {
+    font-size: clamp(1.05rem, 5.4vw, 1.45rem);
+  }
+
+  .month-page-analytics {
+    padding: 12px 12px 14px;
+  }
+
+  .analytics-daily-scale {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+
+  .analytics-hbar-chart {
+    column-gap: 8px;
+    row-gap: 10px;
+  }
+
+  .analytics-hbar-label {
+    font-size: 9px;
+    white-space: normal;
+    max-width: 5.5rem;
+    line-height: 1.25;
+  }
+
+  .analytics-hbar-value {
+    font-size: 10px;
+  }
+
+  .analytics-daily-goal-line {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+  }
+}
+
+@media (max-width: 380px) {
+  body {
+    padding-top: max(78px, calc(env(safe-area-inset-top, 0px) + 56px));
+  }
+
+  .month-countdown {
+    max-width: calc(100vw - 86px);
+    font-size: 10px;
+  }
+
+  .dashboard-money-gate {
+    letter-spacing: 0.1em;
+  }
+}
+
 @media print {
   .page-break-line {
     page-break-after: always;
