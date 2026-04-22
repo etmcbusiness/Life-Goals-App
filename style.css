@@ -214,6 +214,13 @@ body {
 @media (max-width: 840px) {
   .month-page-body {
     grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .month-page-main {
+    width: min(100%, 480px);
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .month-page-analytics {
@@ -292,7 +299,7 @@ body {
   height: 100vh;
   background: #050505;
   border-right: 1px solid var(--green-dim);
-  box-shadow: 0 0 24px var(--green-glow);
+  box-shadow: none;
   z-index: 140;
   transform: translateX(-100%);
   transition: transform 0.2s ease;
@@ -305,6 +312,7 @@ body {
 
 .side-menu.open {
   transform: translateX(0);
+  box-shadow: 0 0 24px var(--green-glow);
 }
 
 .side-menu-close {
@@ -1793,26 +1801,44 @@ html {
     left: max(10px, env(safe-area-inset-left, 0px));
     width: 44px;
     height: 44px;
-    box-shadow: 0 0 6px rgba(0, 255, 65, 0.22);
+    box-shadow: none;
   }
 
   .menu-btn:hover {
-    box-shadow: 0 0 10px rgba(0, 255, 65, 0.32);
+    box-shadow: none;
   }
 
   .dashboard-home-btn {
     top: max(10px, env(safe-area-inset-top, 0px));
     right: max(10px, env(safe-area-inset-right, 0px));
-    box-shadow: 0 0 6px rgba(0, 255, 65, 0.22);
+    box-shadow: none;
   }
 
   .dashboard-home-btn:hover {
-    box-shadow: 0 0 10px rgba(0, 255, 65, 0.32);
+    box-shadow: none;
+  }
+
+  .month-nav-link {
+    box-shadow: none;
+  }
+
+  .month-nav-link:hover {
+    box-shadow: none;
+  }
+
+  .progress-fill-segment.progress-fill--actual,
+  .progress-fill-segment.progress-fill--estimated {
+    box-shadow: none;
   }
 
   .app-container--month-split .month-page-nav {
-    padding-left: max(52px, env(safe-area-inset-left, 0px));
-    padding-right: max(112px, env(safe-area-inset-right, 0px));
+    --month-nav-chrome: max(
+      118px,
+      env(safe-area-inset-left, 0px),
+      env(safe-area-inset-right, 0px)
+    );
+    padding-left: var(--month-nav-chrome);
+    padding-right: var(--month-nav-chrome);
     width: 100%;
     box-sizing: border-box;
   }
@@ -1826,6 +1852,9 @@ html {
     padding: 22px 14px;
     letter-spacing: 0.16em;
     font-size: clamp(1.35rem, 6vw, 2.25rem);
+    box-shadow:
+      0 0 14px rgba(0, 255, 65, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28);
   }
 
   .terminal-box {
@@ -1888,10 +1917,6 @@ html {
 
   .dashboard-money-gate {
     letter-spacing: 0.1em;
-  }
-
-  .app-container--month-split .month-page-nav {
-    padding-right: max(118px, env(safe-area-inset-right, 0px));
   }
 }
 
