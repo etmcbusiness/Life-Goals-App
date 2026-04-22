@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Analytics - Lock In</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div class="scanlines"></div>
+  <a class="dashboard-home-btn" href="index.html" aria-label="Back to dashboard">Dashboard</a>
+  <button class="menu-btn" id="menuOpenBtn">☰</button>
+  <div class="side-menu-overlay" id="sideMenuOverlay"></div>
+  <aside class="side-menu" id="sideMenu">
+    <button class="side-menu-close" id="menuCloseBtn">✕</button>
+    <p class="section-label">PAGES</p>
+    <a class="side-menu-link" href="index.html">Dashboard</a>
+    <a class="side-menu-link" id="sideMenuCurrentMonthLink" href="month.html">Current Month</a>
+    <a class="side-menu-link" href="analytics.html">Analytics</a>
+    <p class="section-label side-menu-months-label" id="sideMenuMonthsLabel">MONTHS</p>
+    <nav class="side-menu-months" id="sideMenuMonths" aria-label="Revenue by month"></nav>
+  </aside>
+
+  <div class="app-container">
+    <div class="header">
+      <p class="app-title">ANALYTICS</p>
+      <p class="step-label">Revenue overview</p>
+    </div>
+
+    <div class="task-section">
+      <p class="section-label">CURRENT MONTH'S TOTAL REVENUE</p>
+      <div class="terminal-box analytics-section-card" id="analyticsSectionTotalRevenue" aria-label="Current month total revenue">
+        <p class="box-prompt analytics-month-revenue-value" id="analyticsTotalRevenueValue">$0.00</p>
+      </div>
+    </div>
+
+    <div class="task-section">
+      <p class="section-label">CURRENT MONTH'S ESTIMATED REVENUE</p>
+      <div class="terminal-box analytics-section-card" id="analyticsSectionExpectedRevenue" aria-label="Current month estimated revenue">
+        <p class="box-prompt analytics-month-revenue-value analytics-month-revenue-value--estimated" id="analyticsExpectedRevenueValue">$0.00</p>
+      </div>
+    </div>
+
+    <div class="task-section">
+      <p class="section-label">AVERAGE DAILY REVENUE</p>
+      <div
+        class="terminal-box analytics-section-card analytics-section-card--daily"
+        id="analyticsSectionAvgDailyRevenue"
+        aria-label="Average daily revenue vs goal pace"
+      >
+        <div class="analytics-daily-bars-stack">
+          <div class="analytics-daily-bar-block">
+            <p class="analytics-daily-bar-group-label">ACTUAL REVENUE</p>
+            <div class="analytics-daily-scale">
+              <span class="analytics-daily-scale-low" id="analyticsDailyScaleAvg1">$0.00 / day</span>
+              <span class="analytics-daily-scale-extra" id="analyticsDailyScaleExtra1">$0.00 / day</span>
+            </div>
+            <div class="analytics-daily-track" role="img" aria-labelledby="analyticsDailyScaleAvg1 analyticsDailyScaleExtra1 analyticsDailyGoalLine">
+              <div class="analytics-daily-green" id="analyticsDailyGreen1"></div>
+              <div class="analytics-daily-red" id="analyticsDailyRed1"></div>
+            </div>
+          </div>
+          <div class="analytics-daily-bar-block">
+            <p class="analytics-daily-bar-group-label">ACTUAL + ESTIMATED</p>
+            <div class="analytics-daily-scale">
+              <span class="analytics-daily-scale-low" id="analyticsDailyScaleAvg2">$0.00 / day</span>
+              <span class="analytics-daily-scale-extra" id="analyticsDailyScaleExtra2">$0.00 / day</span>
+            </div>
+            <div class="analytics-daily-track" role="img" aria-labelledby="analyticsDailyScaleAvg2 analyticsDailyScaleExtra2 analyticsDailyGoalLine">
+              <div class="analytics-daily-green analytics-daily-green--combined" id="analyticsDailyGreen2"></div>
+              <div class="analytics-daily-red" id="analyticsDailyRed2"></div>
+            </div>
+          </div>
+        </div>
+        <p class="analytics-daily-goal-line" id="analyticsDailyGoalLine"></p>
+      </div>
+    </div>
+
+    <div class="task-section analytics-hbar-section" id="habit-log">
+      <p class="section-label">HABITS (HORIZONTAL)</p>
+      <div class="analytics-hbar-chart" id="analyticsHBarChart" role="img" aria-label="Habit progress bars"></div>
+      <div class="analytics-habit-log-header">
+        <p class="section-label analytics-habit-log-section-label">DAILY HABIT LOG</p>
+        <button
+          type="button"
+          class="analytics-habit-log-toggle"
+          id="analyticsHabitLogToggle"
+          aria-expanded="false"
+          aria-controls="analyticsHabitLogPanel"
+        >
+          Edit history
+        </button>
+      </div>
+      <div id="analyticsHabitLogPanel" class="analytics-habit-log-panel" hidden></div>
+    </div>
+  </div>
+
+  <script src="menu.js"></script>
+  <script src="daily-habits.js"></script>
+  <script src="analytics-render.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>

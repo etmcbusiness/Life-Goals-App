@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Month - Lock In</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div class="scanlines"></div>
+  <a class="dashboard-home-btn" href="index.html" aria-label="Back to dashboard">Dashboard</a>
+  <button class="menu-btn" id="menuOpenBtn">☰</button>
+  <div class="side-menu-overlay" id="sideMenuOverlay"></div>
+  <aside class="side-menu" id="sideMenu">
+    <button class="side-menu-close" id="menuCloseBtn">✕</button>
+    <p class="section-label">PAGES</p>
+    <a class="side-menu-link" href="index.html">Dashboard</a>
+    <a class="side-menu-link" id="sideMenuCurrentMonthLink" href="month.html">Current Month</a>
+    <a class="side-menu-link" href="analytics.html">Analytics</a>
+    <p class="section-label side-menu-months-label" id="sideMenuMonthsLabel">MONTHS</p>
+    <nav class="side-menu-months" id="sideMenuMonths" aria-label="Revenue by month"></nav>
+  </aside>
+
+  <div class="app-container app-container--month-split">
+    <div class="header">
+      <div class="month-page-nav">
+        <a class="month-nav-link" id="monthNavPrev" href="month.html">◀</a>
+        <div class="month-page-heading">
+          <p class="app-title" id="monthPageTitle">MONTH</p>
+          <p class="step-label" id="monthPageStepLabel">Month Revenue Progress</p>
+        </div>
+        <a class="month-nav-link" id="monthNavNext" href="month.html">▶</a>
+      </div>
+
+      <div class="progress-section header-progress-section">
+        <div class="progress-track">
+          <div class="progress-fill-dual" id="monthProgressDual">
+            <div class="progress-fill-segment progress-fill--actual" id="monthProgressActual"></div>
+            <div class="progress-fill-segment progress-fill--estimated" id="monthProgressEstimated"></div>
+          </div>
+        </div>
+        <div class="progress-header">
+          <p class="progress-label header-scale-label" id="monthProgressMadeLabel">$0</p>
+          <p class="progress-label header-scale-label">$10,000</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="month-page-body">
+      <div class="month-page-main">
+    <div class="task-section">
+      <div class="input-wrapper single-line">
+        <span class="input-prefix">$</span>
+        <input
+          type="number"
+          id="monthRevenueInput"
+          class="goal-input"
+          placeholder="Enter revenue amount"
+          min="0"
+          step="0.01"
+        />
+      </div>
+      <div class="input-wrapper single-line">
+        <span class="input-prefix">&gt;</span>
+        <input
+          type="text"
+          id="monthRevenueLocationInput"
+          class="goal-input"
+          placeholder="Location"
+          maxlength="120"
+        />
+      </div>
+      <input type="hidden" id="monthRevenueDateInput" />
+      <div class="input-wrapper single-line date-picker-line">
+        <span class="input-prefix">&gt;</span>
+        <input
+          type="text"
+          readonly
+          id="monthRevenueDateDisplay"
+          class="goal-input date-picker-readonly"
+          placeholder="DATE"
+          tabindex="0"
+        />
+        <button type="button" class="date-picker-trigger" id="monthRevenueDateTrigger" aria-label="Open calendar">
+          <span class="date-picker-icon" aria-hidden="true">📅</span>
+        </button>
+      </div>
+      <div class="revenue-dropdown-row">
+        <div class="custom-dropdown" id="monthRevenueSourceDropdown">
+          <button class="custom-dropdown-trigger" id="monthRevenueSourceTrigger" type="button">
+            <span class="input-prefix">&gt;</span>
+            <span id="monthRevenueSourceLabel">Select revenue source</span>
+          </button>
+          <div class="custom-dropdown-options" id="monthRevenueSourceOptions">
+            <button class="custom-dropdown-option" type="button" data-value="Janitorial Cleaning">Janitorial Cleaning</button>
+            <button class="custom-dropdown-option" type="button" data-value="Window Cleaning">Window Cleaning</button>
+            <button class="custom-dropdown-option" type="button" data-value="Other">Other</button>
+          </div>
+        </div>
+        <div class="custom-dropdown" id="monthRevenueKindDropdown">
+          <button class="custom-dropdown-trigger" id="monthRevenueKindTrigger" type="button">
+            <span class="input-prefix">&gt;</span>
+            <span id="monthRevenueKindLabel">Revenue Type</span>
+          </button>
+          <div class="custom-dropdown-options" id="monthRevenueKindOptions">
+            <button class="custom-dropdown-option" type="button" data-value="actual">Actual Revenue</button>
+            <button class="custom-dropdown-option" type="button" data-value="estimated">Estimated Revenue</button>
+          </div>
+        </div>
+      </div>
+      <div class="input-wrapper single-line hidden" id="monthRevenueOtherWrapper">
+        <span class="input-prefix">&gt;</span>
+        <input
+          type="text"
+          id="monthRevenueOtherInput"
+          class="goal-input"
+          placeholder="Type other revenue source"
+          maxlength="120"
+        />
+      </div>
+      <button class="add-btn" id="monthRevenueEnterBtn">ENTER</button>
+      <p class="confirm-value" id="revenueLineTotalActual">Actual revenue this month: $0.00</p>
+      <p class="confirm-value" id="revenueLineTotalCombined">Actual + estimated this month: $0.00</p>
+      <hr class="page-break-line" />
+    </div>
+
+    <div class="task-section">
+      <p class="confirm-value" id="monthTotalLine">Total: $0</p>
+      <p class="progress-percent" id="monthPercentLine">0%</p>
+    </div>
+
+    <div class="task-section">
+      <p class="section-label">ENTRIES (LATEST FIRST)</p>
+      <ul class="item-list" id="monthEntriesList"></ul>
+    </div>
+      </div>
+
+      <aside class="month-page-analytics" aria-label="Analytics for this month">
+        <p class="section-label month-page-analytics-title" id="monthPageAnalyticsMonthLabel">ANALYTICS</p>
+        <a class="month-page-analytics-full-link" href="analytics.html">Full analytics →</a>
+
+        <p class="section-label month-page-analytics-sub">TOTAL REVENUE</p>
+        <div class="terminal-box analytics-section-card month-page-analytics-card">
+          <p class="box-prompt analytics-month-revenue-value" id="monthSideTotalRevenueValue">$0.00</p>
+        </div>
+
+        <p class="section-label month-page-analytics-sub">ESTIMATED REVENUE</p>
+        <div class="terminal-box analytics-section-card month-page-analytics-card">
+          <p
+            class="box-prompt analytics-month-revenue-value analytics-month-revenue-value--estimated"
+            id="monthSideExpectedRevenueValue"
+          >
+            $0.00
+          </p>
+        </div>
+
+        <p class="section-label month-page-analytics-sub">AVG DAILY VS GOAL</p>
+        <div
+          class="terminal-box analytics-section-card analytics-section-card--daily month-page-analytics-daily"
+          aria-label="Average daily revenue vs goal for this month"
+        >
+          <div class="analytics-daily-bars-stack">
+            <div class="analytics-daily-bar-block">
+              <p class="analytics-daily-bar-group-label">ACTUAL</p>
+              <div class="analytics-daily-scale">
+                <span class="analytics-daily-scale-low" id="monthSideDailyScaleAvg1">$0.00 / day</span>
+                <span class="analytics-daily-scale-extra" id="monthSideDailyScaleExtra1">$0.00 / day</span>
+              </div>
+              <div
+                class="analytics-daily-track"
+                role="img"
+                aria-labelledby="monthSideDailyScaleAvg1 monthSideDailyScaleExtra1 monthSideDailyGoalLine"
+              >
+                <div class="analytics-daily-green" id="monthSideDailyGreen1"></div>
+                <div class="analytics-daily-red" id="monthSideDailyRed1"></div>
+              </div>
+            </div>
+            <div class="analytics-daily-bar-block">
+              <p class="analytics-daily-bar-group-label">ACTUAL + EST.</p>
+              <div class="analytics-daily-scale">
+                <span class="analytics-daily-scale-low" id="monthSideDailyScaleAvg2">$0.00 / day</span>
+                <span class="analytics-daily-scale-extra" id="monthSideDailyScaleExtra2">$0.00 / day</span>
+              </div>
+              <div
+                class="analytics-daily-track"
+                role="img"
+                aria-labelledby="monthSideDailyScaleAvg2 monthSideDailyScaleExtra2 monthSideDailyGoalLine"
+              >
+                <div class="analytics-daily-green analytics-daily-green--combined" id="monthSideDailyGreen2"></div>
+                <div class="analytics-daily-red" id="monthSideDailyRed2"></div>
+              </div>
+            </div>
+          </div>
+          <p class="analytics-daily-goal-line" id="monthSideDailyGoalLine"></p>
+        </div>
+
+        <div class="month-page-analytics-habits">
+          <p class="section-label month-page-analytics-sub">HABITS</p>
+          <div class="analytics-hbar-chart" id="monthSideHBarChart" role="img" aria-label="Habit progress this month"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="monthEditModalOverlay">
+    <div class="modal-box" id="monthEditModalBox">
+      <p class="modal-title">// EDIT ENTRY</p>
+
+      <div class="input-wrapper single-line">
+        <span class="input-prefix">$</span>
+        <input type="number" id="monthEditAmountInput" class="goal-input" min="0" step="0.01" />
+      </div>
+
+      <div class="input-wrapper single-line">
+        <span class="input-prefix">&gt;</span>
+        <input type="text" id="monthEditLocationInput" class="goal-input" placeholder="Location" maxlength="120" />
+      </div>
+
+      <input type="hidden" id="monthEditRevenueDateInput" />
+      <div class="input-wrapper single-line date-picker-line">
+        <span class="input-prefix">&gt;</span>
+        <input
+          type="text"
+          readonly
+          id="monthEditRevenueDateDisplay"
+          class="goal-input date-picker-readonly"
+          placeholder="DATE"
+          tabindex="0"
+        />
+        <button type="button" class="date-picker-trigger" id="monthEditRevenueDateTrigger" aria-label="Open calendar">
+          <span class="date-picker-icon" aria-hidden="true">📅</span>
+        </button>
+      </div>
+
+      <div class="revenue-dropdown-row">
+        <div class="custom-dropdown" id="monthEditRevenueSourceDropdown">
+          <button class="custom-dropdown-trigger" id="monthEditRevenueSourceTrigger" type="button">
+            <span class="input-prefix">&gt;</span>
+            <span id="monthEditRevenueSourceLabel">Select revenue source</span>
+          </button>
+          <div class="custom-dropdown-options" id="monthEditRevenueSourceOptions">
+            <button class="custom-dropdown-option" type="button" data-value="Janitorial Cleaning">Janitorial Cleaning</button>
+            <button class="custom-dropdown-option" type="button" data-value="Window Cleaning">Window Cleaning</button>
+            <button class="custom-dropdown-option" type="button" data-value="Other">Other</button>
+          </div>
+        </div>
+        <div class="custom-dropdown" id="monthEditRevenueKindDropdown">
+          <button class="custom-dropdown-trigger" id="monthEditRevenueKindTrigger" type="button">
+            <span class="input-prefix">&gt;</span>
+            <span id="monthEditRevenueKindLabel">Revenue Type</span>
+          </button>
+          <div class="custom-dropdown-options" id="monthEditRevenueKindOptions">
+            <button class="custom-dropdown-option" type="button" data-value="actual">Actual Revenue</button>
+            <button class="custom-dropdown-option" type="button" data-value="estimated">Estimated Revenue</button>
+          </div>
+        </div>
+      </div>
+      <div class="input-wrapper single-line hidden" id="monthEditRevenueOtherWrapper">
+        <span class="input-prefix">&gt;</span>
+        <input
+          type="text"
+          id="monthEditRevenueOtherInput"
+          class="goal-input"
+          placeholder="Type other revenue source"
+          maxlength="120"
+        />
+      </div>
+
+      <button class="add-btn" id="saveMonthEditEntryBtn">[ SAVE CHANGES ]</button>
+      <button class="back-btn-inline" id="cancelMonthEditEntryBtn">✕ CANCEL</button>
+    </div>
+  </div>
+
+  <script src="calendar-picker.js"></script>
+  <script src="daily-habits.js"></script>
+  <script src="analytics-render.js"></script>
+  <script src="revenue-milestones.js"></script>
+  <script src="month.js"></script>
+  <script src="month-revenue.js"></script>
+  <script src="menu.js"></script>
+</body>
+</html>

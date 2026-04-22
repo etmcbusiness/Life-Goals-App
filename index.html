@@ -1,20 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My App</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lock In</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
 </head>
 <body>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="page2.html">Page 2</a>
-  </nav>
+  <div class="scanlines"></div>
+  <p class="month-countdown" id="monthDaysCountdown" aria-live="polite"></p>
+  <button class="menu-btn" id="menuOpenBtn">☰</button>
+  <div class="side-menu-overlay" id="sideMenuOverlay"></div>
+  <aside class="side-menu" id="sideMenu">
+    <button class="side-menu-close" id="menuCloseBtn">✕</button>
+    <p class="section-label">PAGES</p>
+    <a class="side-menu-link" href="index.html">Dashboard</a>
+    <a class="side-menu-link" id="sideMenuCurrentMonthLink" href="month.html">Current Month</a>
+    <a class="side-menu-link" href="analytics.html">Analytics</a>
+    <p class="section-label side-menu-months-label" id="sideMenuMonthsLabel">MONTHS</p>
+    <nav class="side-menu-months" id="sideMenuMonths" aria-label="Revenue by month"></nav>
+  </aside>
 
-  <h1>Home Page</h1>
-  <p>Welcome to my app!</p>
+  <div class="app-container">
 
-  <script src="app.js"></script>
+    <div class="header">
+      <p class="app-title">LOCK IN</p>
+      <p class="step-label">Goal to make $10,000 Per Month</p>
+
+      <div class="progress-section header-progress-section">
+        <div class="progress-track">
+          <div class="progress-fill-dual" id="headerRevenueProgressDual">
+            <div class="progress-fill-segment progress-fill--actual" id="headerRevenueProgressActual"></div>
+            <div class="progress-fill-segment progress-fill--estimated" id="headerRevenueProgressEstimated"></div>
+          </div>
+        </div>
+        <div class="progress-header">
+          <p class="progress-label header-scale-label" id="headerRevenueMadeLabel">$0</p>
+          <p class="progress-label header-scale-label">$10,000</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="task-section dashboard-revenue-section">
+      <button
+        type="button"
+        id="dashboardMoneyGate"
+        class="dashboard-money-gate"
+        aria-controls="dashboardRevenuePanel"
+        aria-expanded="false"
+      >
+        CASH MONEY
+      </button>
+      <div id="dashboardRevenuePanel" class="dashboard-revenue-panel hidden" aria-hidden="true">
+        <div class="input-wrapper single-line">
+          <span class="input-prefix">$</span>
+          <input
+            type="number"
+            id="aprilRevenueInput"
+            class="goal-input"
+            placeholder="Enter revenue amount"
+            min="0"
+            step="0.01"
+          />
+        </div>
+        <div class="input-wrapper single-line">
+          <span class="input-prefix">&gt;</span>
+          <input
+            type="text"
+            id="aprilRevenueLocationInput"
+            class="goal-input"
+            placeholder="Location"
+            maxlength="120"
+          />
+        </div>
+        <input type="hidden" id="aprilRevenueDateInput" />
+        <div class="input-wrapper single-line date-picker-line">
+          <span class="input-prefix">&gt;</span>
+          <input
+            type="text"
+            readonly
+            id="aprilRevenueDateDisplay"
+            class="goal-input date-picker-readonly"
+            placeholder="DATE"
+            tabindex="0"
+          />
+          <button type="button" class="date-picker-trigger" id="aprilRevenueDateTrigger" aria-label="Open calendar">
+            <span class="date-picker-icon" aria-hidden="true">📅</span>
+          </button>
+        </div>
+        <div class="revenue-dropdown-row">
+          <div class="custom-dropdown" id="aprilRevenueSourceDropdown">
+            <button class="custom-dropdown-trigger" id="aprilRevenueSourceTrigger" type="button">
+              <span class="input-prefix">&gt;</span>
+              <span id="aprilRevenueSourceLabel">Select revenue source</span>
+            </button>
+            <div class="custom-dropdown-options" id="aprilRevenueSourceOptions">
+              <button class="custom-dropdown-option" type="button" data-value="Janitorial Cleaning">Janitorial Cleaning</button>
+              <button class="custom-dropdown-option" type="button" data-value="Window Cleaning">Window Cleaning</button>
+              <button class="custom-dropdown-option" type="button" data-value="Other">Other</button>
+            </div>
+          </div>
+          <div class="custom-dropdown" id="aprilRevenueKindDropdown">
+            <button class="custom-dropdown-trigger" id="aprilRevenueKindTrigger" type="button">
+              <span class="input-prefix">&gt;</span>
+              <span id="aprilRevenueKindLabel">Revenue Type</span>
+            </button>
+            <div class="custom-dropdown-options" id="aprilRevenueKindOptions">
+              <button class="custom-dropdown-option" type="button" data-value="actual">Actual Revenue</button>
+              <button class="custom-dropdown-option" type="button" data-value="estimated">Estimated Revenue</button>
+            </div>
+          </div>
+        </div>
+        <div class="input-wrapper single-line hidden" id="aprilRevenueOtherWrapper">
+          <span class="input-prefix">&gt;</span>
+          <input
+            type="text"
+            id="aprilRevenueOtherInput"
+            class="goal-input"
+            placeholder="Type other revenue source"
+            maxlength="120"
+          />
+        </div>
+        <button class="add-btn" id="aprilRevenueEnterBtn">ENTER</button>
+        <p class="confirm-value" id="revenueLineTotalActual">Actual revenue this month: $0.00</p>
+        <p class="confirm-value" id="revenueLineTotalCombined">Actual + estimated this month: $0.00</p>
+      </div>
+      <hr class="page-break-line" />
+      <div class="dashboard-habits-block">
+        <p class="section-label dashboard-habits-section-label">DAILY HABITS</p>
+        <div class="dashboard-checklist" id="dashboardChecklist">
+          <label class="dashboard-check-item">
+            <input type="checkbox" class="dashboard-check-input" id="dashboardCheckEmails" />
+            <span class="dashboard-check-box" aria-hidden="true"></span>
+            <span class="dashboard-check-right">
+              <span class="dashboard-check-text">Send 100 Emails</span>
+              <span class="dashboard-habit-streak" id="dashboardStreakEmails" title="Consecutive days completed">0</span>
+            </span>
+          </label>
+          <label class="dashboard-check-item">
+            <input type="checkbox" class="dashboard-check-input" id="dashboardCheckDms" />
+            <span class="dashboard-check-box" aria-hidden="true"></span>
+            <span class="dashboard-check-right">
+              <span class="dashboard-check-text">Send 100 DMS</span>
+              <span class="dashboard-habit-streak" id="dashboardStreakDms" title="Consecutive days completed">0</span>
+            </span>
+          </label>
+          <label class="dashboard-check-item">
+            <input type="checkbox" class="dashboard-check-input" id="dashboardCheckVideos" />
+            <span class="dashboard-check-box" aria-hidden="true"></span>
+            <span class="dashboard-check-right">
+              <span class="dashboard-check-text">Post 5 Videos</span>
+              <span class="dashboard-habit-streak" id="dashboardStreakVideos" title="Consecutive days completed">0</span>
+            </span>
+          </label>
+          <label class="dashboard-check-item">
+            <input type="checkbox" class="dashboard-check-input" id="dashboardCheckPnl" />
+            <span class="dashboard-check-box" aria-hidden="true"></span>
+            <span class="dashboard-check-right">
+              <span class="dashboard-check-text">Log P&amp;L Entries</span>
+              <span class="dashboard-habit-streak" id="dashboardStreakPnl" title="Consecutive days completed">0</span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script src="calendar-picker.js"></script>
+  <script src="daily-habits.js"></script>
+  <script src="revenue-milestones.js"></script>
+  <script src="april-revenue.js"></script>
+  <script src="dashboard-money.js"></script>
+  <script src="menu.js"></script>
 </body>
 </html>
