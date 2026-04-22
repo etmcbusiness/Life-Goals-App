@@ -1260,26 +1260,27 @@ input[type='number'] {
 }
 
 .month-countdown {
-  position: fixed;
-  top: 18px;
-  right: 18px;
-  z-index: 125;
-  max-width: min(340px, calc(100vw - 100px));
-  margin: 0;
-  padding: 0;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 0 10px;
+  padding: 4px 6px 8px;
+  box-sizing: border-box;
   font-family: var(--font);
-  font-size: 15px;
+  font-size: clamp(13px, 3.4vw, 16px);
   line-height: 1.35;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  text-align: right;
+  text-align: center;
   color: #ff0000;
   animation: month-countdown-glow 4s ease-in-out infinite;
 }
 
 @media (min-width: 520px) {
   .month-countdown {
-    font-size: 18px;
+    font-size: clamp(15px, 2.2vw, 18px);
+    margin-bottom: 12px;
   }
 }
 
@@ -1640,6 +1641,33 @@ input[type='number'] {
     0 0 12px var(--green-glow);
 }
 
+/* Touch: drop sticky hover/active halo; iOS keeps :focus without :focus-visible — soften ring */
+@media (hover: none) {
+  .dashboard-check-item:hover,
+  .dashboard-check-item:active {
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+.dashboard-check-input:focus {
+  outline: none;
+}
+
+.dashboard-check-input:focus:not(:focus-visible) + .dashboard-check-box {
+  border-color: var(--green-dim);
+  background: var(--green-faint);
+  box-shadow:
+    inset 0 0 10px rgba(0, 255, 65, 0.06),
+    0 0 6px rgba(0, 255, 65, 0.12);
+}
+
+.dashboard-check-input:checked:focus:not(:focus-visible) + .dashboard-check-box {
+  border-color: var(--green);
+  background: rgba(0, 255, 65, 0.12);
+  box-shadow: inset 0 0 12px rgba(0, 255, 65, 0.12);
+}
+
 .dashboard-check-input:checked + .dashboard-check-box::after {
   content: '✓';
   font-size: 15px;
@@ -1711,6 +1739,7 @@ input[type='number'] {
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 @media (max-width: 520px) {
@@ -1736,6 +1765,9 @@ html {
     letter-spacing: 0.2em;
     text-align: center;
     padding: 0 6px;
+    text-shadow:
+      0 0 6px var(--green),
+      0 0 14px var(--green-glow);
   }
 
   .step-label {
@@ -1761,20 +1793,32 @@ html {
     left: max(10px, env(safe-area-inset-left, 0px));
     width: 44px;
     height: 44px;
+    box-shadow: 0 0 6px rgba(0, 255, 65, 0.22);
+  }
+
+  .menu-btn:hover {
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.32);
   }
 
   .dashboard-home-btn {
     top: max(10px, env(safe-area-inset-top, 0px));
     right: max(10px, env(safe-area-inset-right, 0px));
+    box-shadow: 0 0 6px rgba(0, 255, 65, 0.22);
   }
 
-  .month-countdown {
-    top: max(10px, env(safe-area-inset-top, 0px));
-    right: max(10px, env(safe-area-inset-right, 0px));
-    max-width: calc(100vw - 96px);
-    font-size: clamp(10px, 3.1vw, 13px);
-    line-height: 1.25;
-    letter-spacing: 0.05em;
+  .dashboard-home-btn:hover {
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.32);
+  }
+
+  .app-container--month-split .month-page-nav {
+    padding-left: max(52px, env(safe-area-inset-left, 0px));
+    padding-right: max(112px, env(safe-area-inset-right, 0px));
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .dashboard-check-input:checked + .dashboard-check-box {
+    box-shadow: inset 0 0 12px rgba(0, 255, 65, 0.12);
   }
 
   .dashboard-money-gate {
@@ -1842,13 +1886,12 @@ html {
     padding-top: max(78px, calc(env(safe-area-inset-top, 0px) + 56px));
   }
 
-  .month-countdown {
-    max-width: calc(100vw - 86px);
-    font-size: 10px;
-  }
-
   .dashboard-money-gate {
     letter-spacing: 0.1em;
+  }
+
+  .app-container--month-split .month-page-nav {
+    padding-right: max(118px, env(safe-area-inset-right, 0px));
   }
 }
 
