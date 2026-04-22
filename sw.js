@@ -1,5 +1,5 @@
 /* Offline cache for Lock In (static assets only). */
-const CACHE_NAME = 'lock-in-static-v2';
+const CACHE_NAME = 'lock-in-static-v3';
 const APP_ASSETS = [
   'index.html',
   'month.html',
