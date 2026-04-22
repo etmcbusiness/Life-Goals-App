@@ -1,5 +1,6 @@
-/* Offline cache for Lock In (static assets only). */
-const CACHE_NAME = 'lock-in-static-v3';
+/* Offline support: precache assets; when online, network wins so stale cache cannot break the app. */
+const CACHE_NAME = 'lock-in-static-v4';
+
 const APP_ASSETS = [
   'index.html',
   'month.html',
@@ -55,12 +56,28 @@ self.addEventListener('activate', function (event) {
 
 self.addEventListener('fetch', function (event) {
   if (event.request.method !== 'GET') return;
+  var req = event.request;
+  try {
+    var url = new URL(req.url);
+    if (url.origin !== self.location.origin) return;
+  } catch (e) {
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request, { ignoreSearch: true }).then(function (cached) {
-      if (cached) return cached;
-      return fetch(event.request).then(function (response) {
+    fetch(req)
+      .then(function (response) {
         return response;
-      });
-    })
+      })
+      .catch(function () {
+        return caches.match(req, { ignoreSearch: true }).then(function (cached) {
+          if (cached) return cached;
+          return new Response('Offline', {
+            status: 503,
+            statusText: 'Offline',
+            headers: { 'Content-Type': 'text/plain' }
+          });
+        });
+      })
   );
 });

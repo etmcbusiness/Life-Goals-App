@@ -10,12 +10,12 @@
   <title>Analytics - Lock In</title>
   <meta name="apple-mobile-web-app-title" content="Lock In">
   <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" sizes="180x180" href="icon.png?v=ios2" />
-  <link rel="apple-touch-icon" sizes="167x167" href="icon.png?v=ios2" />
-  <link rel="apple-touch-icon" sizes="152x152" href="icon.png?v=ios2" />
-  <link rel="apple-touch-icon" href="icon.png?v=ios2" />
-  <link rel="icon" type="image/png" href="icon.png?v=ios2" />
-  <link rel="stylesheet" href="style.css?v=8" />
+  <link rel="apple-touch-icon" sizes="180x180" href="icon.png?v=ios3" />
+  <link rel="apple-touch-icon" sizes="167x167" href="icon.png?v=ios3" />
+  <link rel="apple-touch-icon" sizes="152x152" href="icon.png?v=ios3" />
+  <link rel="apple-touch-icon" href="icon.png?v=ios3" />
+  <link rel="icon" type="image/png" href="icon.png?v=ios3" />
+  <link rel="stylesheet" href="style.css?v=9" />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
 </head>
 <body>
@@ -107,13 +107,18 @@
     </div>
   </div>
 
-  <script src="menu.js?v=8"></script>
-  <script src="daily-habits.js?v=8"></script>
-  <script src="analytics-render.js?v=8"></script>
-  <script src="analytics.js?v=8"></script>
+  <script src="menu.js?v=9"></script>
+  <script src="daily-habits.js?v=9"></script>
+  <script src="analytics-render.js?v=9"></script>
+  <script src="analytics.js?v=9"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js');
+      navigator.serviceWorker
+        .register('sw.js', { scope: './', updateViaCache: 'none' })
+        .then(function (reg) {
+          return reg.update();
+        })
+        .catch(function () {});
     }
   </script>
 </body>
