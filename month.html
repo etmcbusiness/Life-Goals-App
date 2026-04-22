@@ -4,7 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <meta http-equiv="Cache-Control" content="no-cache" />
+  <meta name="theme-color" content="#00ff41" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <title>Month - Lock In</title>
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css?v=6" />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
 </head>
@@ -280,5 +284,10 @@
   <script src="month.js?v=6"></script>
   <script src="month-revenue.js?v=6"></script>
   <script src="menu.js?v=6"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
 </body>
 </html>
